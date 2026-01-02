@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Users</title>
+</head>
+<body>
+
+<h1>All Users</h1>
+
+<form method="POST" action="/">
+    <input type="text" name="name" placeholder="Enter user name" required>
+    <button type="submit">Add User</button>
+</form>
+
+<ul>
+    {% for user in users %}
+        <li>
+            <a href="/users/{{ user.id }}/movies">{{ user.name }}</a>
+        </li>
+    {% else %}
+        <li>No users yet.</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ user.name }}'s Movies</title>
+</head>
+<body>
+
+<h1>Favorite Movies of {{ user.name }}</h1>
+
+<!-- Forma za dodavanje novog filma -->
+<form method="POST" action="/users/{{ user.id }}/movies">
+    <input type="text" name="name" placeholder="Movie name" required>
+    <input type="number" name="year" placeholder="Year (optional)">
+    <button type="submit">Add Movie</button>
+</form>
+
+<!-- Lista filmova -->
+<ul>
+    {% for movie in movies %}
+        <li>
+            {{ movie.name }}
+            {% if movie.year %}
+                ({{ movie.year }})
+            {% endif %}
+
+            <!-- Forma za update naslova filma -->
+            <form method="POST" action="/users/{{ user.id }}/movies/{{ movie.id }}/update" style="display:inline">
+                <input type="text" name="name" placeholder="New title" required>
+                <button type="submit">Update</button>
+            </form>
+
+            <!-- Forma za brisanje filma -->
+            <form method="POST" action="/users/{{ user.id }}/movies/{{ movie.id }}/delete" style="display:inline">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+    {% else %}
+        <li>No movies yet for this user.</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
