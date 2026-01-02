@@ -1,0 +1,134 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 36px;
+    margin-bottom: 50px;
+    color: #f9f9f9;
+}
+
+header .subtitle {
+    font-size: 24px;
+    color: #f9f9f9;
+}
+
+
+.container {
+    max-width: 1500px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between ;
+}
+
+li img {
+    height: 300px;
+    margin-right: 15px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+form {
+    margin: 20px 0;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 15px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    flex: 1;
+}
+
+button {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #555;
+    color: white;
+    border-radius: 6px;
+    font-size: 18px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.movie-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.movie-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-title {
+    font-weight: bold;
+    font-size: 22px;
+    color: #555;
+}
+
+.movie-year {
+    font-size: 22px;
+    font-weight: bold;
+    color: #555;
+}
+
+.user-btn {
+    display: inline-block;
+    padding: 12px 50px;
+    background-color: #555;
+    color: white;
+    border-radius: 6px;
+    font-size: 18px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.user-btn:hover {
+    background-color: #2980b9;
+}

@@ -1,9 +1,7 @@
-from http.client import responses
-
-from flask import session, request
 from models import db, User, Movie
 from dotenv import load_dotenv
 import os
+import requests
 
 load_dotenv()
 OMDB_API_KEY = os.getenv('OMDB_API_KEY')
@@ -25,14 +23,34 @@ class DataManager:
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
+            if data.get("Response") == "True":
+                return {
+                    "name": data.get("Title"),
+                    "director": data.get("Director"),
+                    "year": int(data.get("Year")) if data.get("Year") else None,
+                    "poster_url": data.get("Poster")
+                }
+            return None
 
 
-    def add_movie(self, user_id, name, year=None):
 
-        new_movie = Movie(name=name, year=year, user_id=user_id)
+    def add_movie(self, user_id, movie_name):
 
-        db.session.add(new_movie)
-        db.session.commit()
+        info = self.fetch_movie_info(movie_name)
+
+        if info:
+            new_movie = Movie(
+                name=info['name'],
+                director=info['director'],
+                year=info['year'],
+                poster_url=info['poster_url'],
+                user_id=user_id
+            )
+
+            db.session.add(new_movie)
+            db.session.commit()
+            return new_movie
+        return None
 
     def update_movie_title(self, movie_id, new_name):
 
@@ -46,7 +64,9 @@ class DataManager:
 
         movie = Movie.query.get(movie_id)
 
-        if movie:
-            db.session.delete(movie)
-            db.session.commit()
+        if not movie:
+            return False
+
+        db.session.delete(movie)
+        db.session.commit()
 

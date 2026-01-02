@@ -1,43 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ user.name }}'s Movies</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-<h1>Favorite Movies of {{ user.name }}</h1>
+{% block content %}
+<h1 class="movie-title">Favorite Movies of {{ user.name }}</h1>
 
-<!-- Forma za dodavanje novog filma -->
-<form method="POST" action="/users/{{ user.id }}/movies">
+<form method="POST" action="/users/{{ user.id }}/movies" class="add-movie-form">
     <input type="text" name="name" placeholder="Movie name" required>
     <input type="number" name="year" placeholder="Year (optional)">
-    <button type="submit">Add Movie</button>
+    <button type="submit" class="user-btn" >Add Movie</button>
 </form>
 
-<!-- Lista filmova -->
 <ul>
     {% for movie in movies %}
-        <li>
-            {{ movie.name }}
-            {% if movie.year %}
-                ({{ movie.year }})
-            {% endif %}
+        <li class="movie-item">
 
-            <!-- Forma za update naslova filma -->
-            <form method="POST" action="/users/{{ user.id }}/movies/{{ movie.id }}/update" style="display:inline">
-                <input type="text" name="name" placeholder="New title" required>
-                <button type="submit">Update</button>
-            </form>
 
-            <!-- Forma za brisanje filma -->
-            <form method="POST" action="/users/{{ user.id }}/movies/{{ movie.id }}/delete" style="display:inline">
-                <button type="submit">Delete</button>
-            </form>
+            <div class="movie-info">
+                {% if movie.poster_url %}
+                    <img src="{{ movie.poster_url }}" alt="{{ movie.name }} poster" height="150">
+                {% endif %}
+                <div class="movie-text">
+    <span class="movie-title">{{ movie.name }}</span>
+    {% if movie.year %}
+        <span class="movie-year">({{ movie.year }})</span>
+    {% endif %}
+</div>
+
+            </div>
+
+<div class="movie-actions">
+    <form method="POST" action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}">
+        <input type="text" name="name" placeholder="New title" required>
+
+        <div class="buttons">
+            <button type="submit" >Update</button>
+
+            <button
+                formaction="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}"
+                formmethod="POST"
+                onclick="return confirm('Are you sure you want to delete this movie?');">
+                Delete
+            </button>
+        </div>
+    </form>
+</div>
         </li>
     {% else %}
         <li>No movies yet for this user.</li>
     {% endfor %}
 </ul>
-
-</body>
-</html>
+{% endblock %}
